@@ -1,0 +1,98 @@
+first i use 3 hall effect sensors at gas knob 0degree 90degree and 180degree and servo placed at regulator when knob at 0degree servo will be off and the knob at 90degree or 180degree the servo will be on and when knob will be on i used two obsatcle sensors at entry exit count the human in out and when knob on and count will be zero then start 5min timer when not entry count will increase within 5 minute then regulator will be on else off regulator when regulator will be off after 5 min then human come knob off and on the regulator will be on and two timer switches first first is 10minute and second is 20minute and one switch for stop the timer and then completed time buzzer beeps and last gas leak prevention when detect leak buzzer beeps when specific level reaches leakage turn on exhaust and emergency light this process will be continue make pinout and arduino code please
+ChatGPT said:
+
+That’s a fantastic safety + automation project 👏 You’re basically building a Smart Gas Safety System with Hall sensors, IR counters, servo control, timer automation, and gas leak prevention. Let’s break it down step by step so the circuit & code don’t get messy.
+
+🛠️ Hardware Plan
+
+Sensors & Modules:
+
+3× Hall sensors → Gas knob position detection (0°, 90°, 180°).
+
+2× IR obstacle sensors → Human entry & exit counter.
+
+Gas sensor (MQ-2 / MQ-5) → Detect leakage.
+
+Servo motor (SG90/MG90S) → Regulator ON/OFF.
+
+Buzzer → Alerts.
+
+LED / Emergency light → Visual warning.
+
+Exhaust fan (via relay module) → Remove leaked gas.
+
+Push switches → Timer (10 min, 20 min, Stop).
+
+Outputs:
+
+Servo motor (gas regulator)
+
+Buzzer
+
+Exhaust fan (relay)
+
+Emergency light (relay or LED)
+
+🔌 Pinout (Arduino Uno)
+Component	Pin
+Hall 0°	D2
+Hall 90°	D3
+Hall 180°	D4
+Entry IR	D5
+Exit IR	D6
+Gas Sensor (MQ-2 analog)	A0
+Servo motor	D9
+Buzzer	D10
+Exhaust Fan Relay	D11
+Emergency Light Relay	D12
+Switch Timer 10 min	D7
+Switch Timer 20 min	D8
+Stop Timer Switch	D13
+
+(We can rearrange later if you want specific pins free.)
+
+⚡ Working Logic (Step by Step)
+
+Knob Position (Hall sensors):
+
+At 0° → Servo OFF (regulator closed).
+
+At 90° or 180° → Servo ON (regulator open).
+
+Human Counter (IR sensors):
+
+Entry IR → +1
+
+Exit IR → –1
+
+Counter never goes below 0.
+
+Auto OFF Timer:
+
+If knob is ON and human count = 0 → Start 5-min countdown.
+
+If someone enters before 5 minutes → Cancel timer.
+
+If no one enters → Regulator OFF (servo closes).
+
+Manual Timers:
+
+Button 1 → Run timer for 10 min.
+
+Button 2 → Run timer for 20 min.
+
+Button Stop → Cancel timer.
+
+At end of timer → Servo OFF + Buzzer beep.
+
+Gas Leak Prevention:
+
+If gas level > threshold →
+
+Servo OFF (close regulator).
+
+Buzzer ON.
+
+Exhaust Fan ON.
+
+Emergency Light ON.

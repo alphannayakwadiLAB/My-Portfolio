@@ -1,0 +1,15 @@
+Project Name: Smart Gas Regulator 
+Designed By: Alphan Zakir Nayakwadi
+             M.Sc ELectronics 
+             Shivaji University Kolhapur
+
+1. Arduino Uno Development Board
+2. MQ-05 LPG Detect Sensor
+3. Relay Module
+4. IR Obstacle Sensor 
+5. Servo Motor 
+6. Hall Effect Sensors
+7. Wires
+8. DC Exhaust Fan
+9. Power Supply
+10. Magnet
