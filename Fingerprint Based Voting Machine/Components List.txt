@@ -1,0 +1,14 @@
+Fingerprint Based Voting Machine 
+Designed By: Alphan Zakir Nayakwadi
+             M.Sc Electronics
+             Shivaji University Kolhapur
+
+1. ESP8266 Development Board
+2. R307 Fingerprint Sensor
+3. OLED Display
+4. PCF8574 I/O Expander
+5. Limit Switch
+6. Push Keys
+7. 10k Resisters
+8. Buzzer
+9. 5v 100ma Power Supply
