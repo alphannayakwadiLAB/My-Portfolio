@@ -1,0 +1,12 @@
+Experiment Name: Smart Hydration Monitor
+Designed By: Mr. Alphan Zakir Nayakwadi
+             M.Sc Electronnics
+             Shivaji University Kolhapur
+
+Components List:
+1. ESP8266 Development Board
+2. HX711 15kg Load Cell
+3. HX711 Amplifier
+4. Wifi Network
+5. Wires
+6. Power Supply
