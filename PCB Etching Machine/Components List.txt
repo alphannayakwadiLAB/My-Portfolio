@@ -1,0 +1,16 @@
+Project Name: PCB Etching Machine
+Designed By: Alphan Zakir Nayakwadi
+             M.Sc Electronics
+             Shivaji University Kolhapur
+
+Components List
+1. Arduino Uno Development Board
+2. L293D Motor Driver
+3. 30RPM DC Gear Motor
+4. Buzzer
+5. LCD 16x2
+6. 10k Potentiometer
+7. Wires
+8. Power Supply
+9. Limit Switch
+
