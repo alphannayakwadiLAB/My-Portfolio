@@ -1,0 +1,17 @@
+1. When the NodeMCU starts, it initializes the buttons, relay, OLED display and serial communication.
+2. The OLED displays System Ready.
+3. The user presses one of the timer buttons.
+4. The NodeMCU switches ON the relay and starts the selected countdown.
+5. The OLED continuously displays the remaining time in HH:MM:SS format
+6. When the countdown reaches zero, the relay switches OFF automatically.
+7. In Continuous Mode, the fan stays ON until the OFF button is pressed.
+
+Feature	Function
+
+1. 4-hour timer	Fan runs for 4 hours, then switches OFF
+2. 5-hour timer	Fan runs for 5 hours, then switches OFF
+3. 6-hour timer	Fan runs for 6 hours, then switches OFF
+4. Continuous ON	Fan remains ON until manually stopped
+5. Manual OFF	Immediately switches the fan OFF
+6. OLED display	Displays operating mode and remaining time
+7. Automatic shutdown	Relay switches OFF when the selected timer expires

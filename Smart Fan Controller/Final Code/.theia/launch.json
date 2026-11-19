@@ -1,0 +1,173 @@
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
+
+// I2C Pins
+#define SDA_PIN 4
+#define SCL_PIN 5
+
+// Buttons
+#define BTN_4H 14
+#define BTN_5H 12
+#define BTN_6H 13
+#define BTN_ON 16
+#define BTN_OFF 0
+
+// Outputs
+#define RELAY 2
+#define BUZZER 15
+
+unsigned long timerEnd = 0;
+bool timerRunning = false;
+bool continuousOn = false;
+bool continuousOff = false;
+
+bool alarmActive = false;
+unsigned long alarmStart = 0;
+
+void setup() {
+
+  Wire.begin(SDA_PIN, SCL_PIN);
+
+  pinMode(BTN_4H, INPUT_PULLUP);
+  pinMode(BTN_5H, INPUT_PULLUP);
+  pinMode(BTN_6H, INPUT_PULLUP);
+  pinMode(BTN_ON, INPUT_PULLUP);
+  pinMode(BTN_OFF, INPUT_PULLUP);
+
+  pinMode(RELAY, OUTPUT);
+  pinMode(BUZZER, OUTPUT);
+
+  digitalWrite(RELAY, LOW);
+  digitalWrite(BUZZER, LOW);
+
+  display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
+  display.clearDisplay();
+  display.display();
+}
+
+void loop() {
+  readButtons();
+  checkTimer();
+  handleAlarm();
+  updateDisplay();
+}
+
+void readButtons() {
+
+  if (digitalRead(BTN_4H) == LOW) {
+    startTimer(4);
+    delay(300);
+  }
+
+  if (digitalRead(BTN_5H) == LOW) {
+    startTimer(5);
+    delay(300);
+  }
+
+  if (digitalRead(BTN_6H) == LOW) {
+    startTimer(6);
+    delay(300);
+  }
+
+  if (digitalRead(BTN_ON) == LOW) {
+    stopAllModes();
+    continuousOn = true;
+    digitalWrite(RELAY, HIGH);
+    shortBeep();
+    delay(300);
+  }
+
+  if (digitalRead(BTN_OFF) == LOW) {
+    stopAllModes();
+    continuousOff = true;
+    digitalWrite(RELAY, LOW);
+    shortBeep();
+    delay(300);
+  }
+}
+
+void startTimer(int hours) {
+  stopAllModes();
+  timerRunning = true;
+  timerEnd = millis() + (hours * 3600000UL);
+  digitalWrite(RELAY, HIGH);
+  shortBeep();
+}
+
+void stopAllModes() {
+  timerRunning = false;
+  continuousOn = false;
+  continuousOff = false;
+  timerEnd = 0;
+}
+
+void checkTimer() {
+  if (timerRunning && millis() >= timerEnd) {
+    timerRunning = false;
+    digitalWrite(RELAY, LOW);
+    alarmActive = true;
+    alarmStart = millis();
+  }
+}
+
+void shortBeep() {
+  digitalWrite(BUZZER, HIGH);
+  delay(200);
+  digitalWrite(BUZZER, LOW);
+}
+
+void handleAlarm() {
+  if (alarmActive) {
+    if (millis() - alarmStart <= 10000) {
+      digitalWrite(BUZZER, HIGH);
+    } else {
+      digitalWrite(BUZZER, LOW);
+      alarmActive = false;
+    }
+  }
+}
+
+void updateDisplay() {
+
+  display.clearDisplay();
+  display.setTextSize(1);
+  display.setTextColor(WHITE);
+
+  // Your Name
+  display.setCursor(20, 0);
+  display.println("ALPHAN NAYAKWADI");
+
+  display.setCursor(0, 20);
+
+  if (timerRunning) {
+
+    unsigned long remaining = (timerEnd - millis()) / 1000;
+    int hr = remaining / 3600;
+    int min = (remaining % 3600) / 60;
+    int sec = remaining % 60;
+
+    display.println("TIMER RUNNING");
+    display.print(hr);
+    display.print("h ");
+    display.print(min);
+    display.print("m ");
+    display.print(sec);
+    display.print("s");
+  }
+  else if (continuousOn) {
+    display.println("MODE: CONTINUOUS ON");
+  }
+  else if (continuousOff) {
+    display.println("MODE: CONTINUOUS OFF");
+  }
+  else {
+    display.println("MODE: IDLE");
+  }
+
+  display.display();
+}
